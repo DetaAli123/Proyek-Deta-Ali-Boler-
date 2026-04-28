@@ -3,108 +3,151 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Deta Ali - Admin Panel</title>
+  <title>Deta Ali - Private Access</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root { --primary: #3498db; }
     html { scroll-behavior: smooth; }
     .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px); }
+    
+    /* Dark Mode Styling */
     [data-theme="dark"] { background: #0f172a; color: #f1f5f9; }
     [data-theme="dark"] .glass { background: rgba(15, 23, 42, 0.85); border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .bg-card { background: #1e293b; border-color: #334155; }
+    
+    .hidden { display: none !important; }
+    .transition-all-custom { transition: all 0.3s ease-in-out; }
   </style>
 </head>
-<body class="antialiased" data-theme="light">
+<body class="antialiased bg-slate-50 text-slate-900 transition-all-custom" data-theme="light">
 
-  <header class="fixed top-0 w-full z-50 glass border-b border-slate-200">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <img src="me.jpg" class="w-10 h-10 rounded-full object-cover ring-2 ring-blue-500" onerror="this.src='https://ui-avatars.com/api/?name=Deta+Ali&background=3498db&color=fff'">
-        <h1 class="text-xl font-black tracking-tighter">DETA <span class="text-blue-500">ALI</span></h1>
+  <div id="loginPage" class="fixed inset-0 flex items-center justify-center z-[100] p-6 bg-slate-100 dark:bg-slate-950 transition-all-custom">
+    <div class="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] w-full max-w-md shadow-2xl border border-slate-200 dark:border-slate-800 bg-card">
+      <div class="mb-8 text-center">
+        <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner">🔑</div>
+        <h4 class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">Private Access</h4>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 font-medium">Masukin ID Mimin buat akses, Mer.</p>
       </div>
       
-      <div class="flex items-center gap-6">
-        <nav class="hidden md:flex gap-8 text-sm font-bold uppercase tracking-widest">
-          <a href="#home" class="hover:text-blue-500 transition">Home</a>
-          <a href="#profil" class="hover:text-blue-500 transition">Profil</a>
-        </nav>
-        <div class="flex items-center gap-4 border-l pl-6 border-slate-200">
-          <button id="themeToggle" class="text-xl">🌙</button>
-          <button id="loginBtn" class="bg-slate-900 text-white dark:bg-blue-600 px-6 py-2 rounded-full text-xs font-black shadow-lg hover:scale-105 transition">
-            LOGIN DER
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <div id="loginModal" class="fixed inset-0 bg-slate-950/80 hidden items-center justify-center z-[100] backdrop-blur-md p-6">
-    <div class="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] w-full max-w-md shadow-2xl relative">
-      <button id="closeLogin" class="absolute top-8 right-8 text-2xl hover:text-red-500 transition">✕</button>
-      <div class="mb-8 text-center">
-        <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">🔑</div>
-        <h4 class="text-2xl font-black text-slate-900 dark:text-white">Khusus Mimin</h4>
-        <p class="text-sm text-slate-500 mt-2">Halaman ini hanya untuk akses database Deta.</p>
-      </div>
-      <form class="space-y-4">
-        <input type="text" id="adminUser" placeholder="Nama Mimin" class="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border-none outline-none focus:ring-2 focus:ring-blue-500">
-        <input type="password" id="adminPass" placeholder="Password Rahasia" class="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border-none outline-none focus:ring-2 focus:ring-blue-500">
-        <button type="button" onclick="loginDer()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black shadow-xl mt-4 active:scale-95 transition">MASUK GECE</button>
+      <form class="space-y-4" onsubmit="event.preventDefault(); loginDer();">
+        <input type="text" id="adminUser" placeholder="Username" class="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border-none outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white transition-all">
+        <input type="password" id="adminPass" placeholder="Password" class="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border-none outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white transition-all">
+        <button type="button" onclick="loginDer()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-black shadow-xl shadow-blue-500/20 mt-4 active:scale-95 transition-all uppercase tracking-widest">Masuk Gece</button>
       </form>
+
+      <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 text-center">
+        <button onclick="toggleTheme()" class="flex items-center gap-3 mx-auto px-5 py-2.5 rounded-full bg-slate-200 dark:bg-slate-800 text-xs font-black hover:scale-105 transition-all uppercase">
+          <span id="themeIcon">🌙</span> <span id="themeText">Mode Gelap</span>
+        </button>
+      </div>
     </div>
   </div>
 
-  <footer class="mt-40 py-12 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
-    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-      <div class="text-center md:text-left">
-        <p class="text-sm font-bold text-slate-400 tracking-widest uppercase">© 2026 DETA ALI</p>
-        <p class="text-xs text-slate-400 mt-1">Built with BOLER in Serpong</p>
+  <div id="mainContent" class="hidden">
+    <header class="fixed top-0 w-full z-50 glass border-b border-slate-200 dark:border-slate-800 transition-all-custom">
+      <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <img src="me.jpg" class="w-10 h-10 rounded-full object-cover ring-2 ring-blue-500" onerror="this.src='https://ui-avatars.com/api/?name=Deta+Ali&background=3498db&color=fff'">
+          <h1 class="text-xl font-black tracking-tighter uppercase">Deta <span class="text-blue-500">Ali</span></h1>
+        </div>
+        
+        <div class="flex items-center gap-6">
+          <button onclick="toggleTheme()" class="text-xl hover:scale-125 transition-transform" title="Ganti Tema">
+            <span class="mainThemeIcon">🌙</span>
+          </button>
+          <button onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full text-[10px] font-black shadow-lg transition-all active:scale-95 uppercase">Logout</button>
+        </div>
       </div>
-      
-      <div class="flex flex-wrap justify-center gap-8">
-        <a href="https://wa.me/628123456789" target="_blank" class="group flex items-center gap-2">
-          <span class="p-2 rounded-lg bg-green-100 group-hover:bg-green-500 transition-colors">🟢</span>
-          <span class="text-sm font-black group-hover:text-green-500 transition">WHATSAPP</span>
-        </a>
-        <a href="https://instagram.com/detaali" target="_blank" class="group flex items-center gap-2">
-          <span class="p-2 rounded-lg bg-pink-100 group-hover:bg-pink-500 transition-colors">📸</span>
-          <span class="text-sm font-black group-hover:text-pink-500 transition">INSTAGRAM</span>
-        </a>
-        <a href="https://github.com/detaali" target="_blank" class="group flex items-center gap-2">
-          <span class="p-2 rounded-lg bg-slate-100 group-hover:bg-black group-hover:text-white transition-colors">💻</span>
-          <span class="text-sm font-black group-hover:text-slate-900 transition">GITHUB</span>
-        </a>
-      </div>
-    </div>
-  </footer>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 pt-40 pb-20">
+        <section class="text-center space-y-8">
+            <div class="inline-block px-4 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-[10px] font-black uppercase tracking-widest">Akses Diterima</div>
+            <h2 class="text-5xl md:text-7xl font-black leading-none uppercase italic">Yo, <span class="text-blue-500">Boler!</span></h2>
+            <p class="text-slate-500 dark:text-slate-400 max-w-xl mx-auto text-lg leading-relaxed font-medium">
+              Selamat datang di dashboard pribadi. Semua proyek dan kontak rahasia ada di bawah ini.
+            </p>
+            <div class="relative w-56 h-56 mx-auto">
+                <div class="absolute inset-0 bg-blue-500 rounded-[3rem] rotate-6 opacity-20 animate-pulse"></div>
+                <img src="me.jpg" class="relative w-56 h-56 rounded-[3rem] object-cover shadow-2xl border-4 border-white dark:border-slate-800" onerror="this.style.display='none'">
+            </div>
+        </section>
+
+        <section class="mt-32 pt-20 border-t border-slate-200 dark:border-slate-800">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-10">
+                <div class="text-center md:text-left">
+                    <h5 class="text-lg font-black uppercase tracking-widest text-blue-500 italic">Deta Ali Connect</h5>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 font-bold">Boler Development • 2026</p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="https://wa.me/6282318852375?text=Halo%20Boler,%20gua%20mau%20nanya%20proyek%20nih!" target="_blank" class="group flex items-center gap-3 px-6 py-4 rounded-3xl bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-900/30 hover:bg-green-500 transition-all duration-500">
+                        <span class="text-xl group-hover:rotate-[360deg] transition-transform duration-500">🟢</span>
+                        <span class="text-xs font-black text-green-600 dark:text-green-400 group-hover:text-white transition-colors uppercase">WhatsApp</span>
+                    </a>
+
+                    <a href="https://instagram.com/detaali" target="_blank" class="group flex items-center gap-3 px-6 py-4 rounded-3xl bg-pink-50 dark:bg-pink-900/20 border border-pink-100 dark:border-pink-900/30 hover:bg-gradient-to-tr from-yellow-500 via-red-500 to-purple-600 transition-all duration-500">
+                        <span class="text-xl group-hover:scale-125 transition-transform duration-500">📸</span>
+                        <span class="text-xs font-black text-pink-600 dark:text-pink-400 group-hover:text-white transition-colors uppercase">Instagram</span>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-20 text-center">
+                <p class="text-[9px] font-black text-slate-400 uppercase tracking-[1em]">Built with Boler Pride</p>
+            </div>
+        </section>
+    </main>
+  </div>
 
   <script>
-    // Logic Modal Boler
-    const loginBtn = document.getElementById('loginBtn');
-    const loginModal = document.getElementById('loginModal');
-    const closeLogin = document.getElementById('closeLogin');
+    // LOGIKA GANTI TEMA
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      body.setAttribute('data-theme', newTheme);
+      
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+      const mainIcons = document.querySelectorAll('.mainThemeIcon');
+      
+      if (newTheme === 'dark') {
+        if(themeIcon) themeIcon.textContent = '☀️';
+        if(themeText) themeText.textContent = 'Mode Terang';
+        mainIcons.forEach(icon => icon.textContent = '☀️');
+        body.classList.replace('bg-slate-50', 'bg-slate-950');
+      } else {
+        if(themeIcon) themeIcon.textContent = '🌙';
+        if(themeText) themeText.textContent = 'Mode Gelap';
+        mainIcons.forEach(icon => icon.textContent = '🌙');
+        body.classList.replace('bg-slate-950', 'bg-slate-50');
+      }
+    }
 
-    loginBtn.onclick = () => loginModal.style.display = 'flex';
-    closeLogin.onclick = () => loginModal.style.display = 'none';
-
+    // LOGIKA LOGIN
     function loginDer() {
       const user = document.getElementById('adminUser').value;
       const pass = document.getElementById('adminPass').value;
       
       if(user.toLowerCase() === 'boler' && pass === '25112005') {
-        alert('Selamat Datang Boler! Dashboard segera siap.');
-        loginModal.style.display = 'none';
+        document.getElementById('loginPage').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('mainContent').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }, 300);
       } else {
-        alert('ID/PW lu salah bege');
+        alert('ID/PW lu salah bege, siapa lu?!');
       }
     }
 
-    // Theme Toggle
-    const themeBtn = document.getElementById('themeToggle');
-    themeBtn.onclick = () => {
-      const isDark = document.body.getAttribute('data-theme') === 'dark';
-      document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-      themeBtn.textContent = isDark ? '🌙' : '☀️';
-    };
+    // LOGIKA LOGOUT
+    function logout() {
+      if(confirm('Yakin mau keluar, Mer?')) {
+        location.reload();
+      }
+    }
   </script>
 </body>
 </html>
