@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deta Ali - Admin Panel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --primary: #3498db; }
+    html { scroll-behavior: smooth; }
+    .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px); }
+    [data-theme="dark"] { background: #0f172a; color: #f1f5f9; }
+    [data-theme="dark"] .glass { background: rgba(15, 23, 42, 0.85); border-color: rgba(255,255,255,0.1); }
+  </style>
+</head>
+<body class="antialiased" data-theme="light">
+
+  <header class="fixed top-0 w-full z-50 glass border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <img src="me.jpg" class="w-10 h-10 rounded-full object-cover ring-2 ring-blue-500" onerror="this.src='https://ui-avatars.com/api/?name=Deta+Ali&background=3498db&color=fff'">
+        <h1 class="text-xl font-black tracking-tighter">DETA <span class="text-blue-500">ALI</span></h1>
+      </div>
+      
+      <div class="flex items-center gap-6">
+        <nav class="hidden md:flex gap-8 text-sm font-bold uppercase tracking-widest">
+          <a href="#home" class="hover:text-blue-500 transition">Home</a>
+          <a href="#profil" class="hover:text-blue-500 transition">Profil</a>
+        </nav>
+        <div class="flex items-center gap-4 border-l pl-6 border-slate-200">
+          <button id="themeToggle" class="text-xl">🌙</button>
+          <button id="loginBtn" class="bg-slate-900 text-white dark:bg-blue-600 px-6 py-2 rounded-full text-xs font-black shadow-lg hover:scale-105 transition">
+            LOGIN DER
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="loginModal" class="fixed inset-0 bg-slate-950/80 hidden items-center justify-center z-[100] backdrop-blur-md p-6">
+    <div class="bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] w-full max-w-md shadow-2xl relative">
+      <button id="closeLogin" class="absolute top-8 right-8 text-2xl hover:text-red-500 transition">✕</button>
+      <div class="mb-8 text-center">
+        <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">🔑</div>
+        <h4 class="text-2xl font-black text-slate-900 dark:text-white">Khusus Mimin</h4>
+        <p class="text-sm text-slate-500 mt-2">Halaman ini hanya untuk akses database Deta.</p>
+      </div>
+      <form class="space-y-4">
+        <input type="text" id="adminUser" placeholder="Nama Mimin" class="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border-none outline-none focus:ring-2 focus:ring-blue-500">
+        <input type="password" id="adminPass" placeholder="Password Rahasia" class="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border-none outline-none focus:ring-2 focus:ring-blue-500">
+        <button type="button" onclick="loginDer()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black shadow-xl mt-4 active:scale-95 transition">MASUK GECE</button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="mt-40 py-12 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+      <div class="text-center md:text-left">
+        <p class="text-sm font-bold text-slate-400 tracking-widest uppercase">© 2026 DETA ALI</p>
+        <p class="text-xs text-slate-400 mt-1">Built with BOLER in Serpong</p>
+      </div>
+      
+      <div class="flex flex-wrap justify-center gap-8">
+        <a href="https://wa.me/628123456789" target="_blank" class="group flex items-center gap-2">
+          <span class="p-2 rounded-lg bg-green-100 group-hover:bg-green-500 transition-colors">🟢</span>
+          <span class="text-sm font-black group-hover:text-green-500 transition">WHATSAPP</span>
+        </a>
+        <a href="https://instagram.com/detaali" target="_blank" class="group flex items-center gap-2">
+          <span class="p-2 rounded-lg bg-pink-100 group-hover:bg-pink-500 transition-colors">📸</span>
+          <span class="text-sm font-black group-hover:text-pink-500 transition">INSTAGRAM</span>
+        </a>
+        <a href="https://github.com/detaali" target="_blank" class="group flex items-center gap-2">
+          <span class="p-2 rounded-lg bg-slate-100 group-hover:bg-black group-hover:text-white transition-colors">💻</span>
+          <span class="text-sm font-black group-hover:text-slate-900 transition">GITHUB</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Logic Modal Boler
+    const loginBtn = document.getElementById('loginBtn');
+    const loginModal = document.getElementById('loginModal');
+    const closeLogin = document.getElementById('closeLogin');
+
+    loginBtn.onclick = () => loginModal.style.display = 'flex';
+    closeLogin.onclick = () => loginModal.style.display = 'none';
+
+    function loginDer() {
+      const user = document.getElementById('adminUser').value;
+      const pass = document.getElementById('adminPass').value;
+      
+      if(user.toLowerCase() === 'boler' && pass === '25112005') {
+        alert('Selamat Datang Boler! Dashboard segera siap.');
+        loginModal.style.display = 'none';
+      } else {
+        alert('ID/PW lu salah bege');
+      }
+    }
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggle');
+    themeBtn.onclick = () => {
+      const isDark = document.body.getAttribute('data-theme') === 'dark';
+      document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      themeBtn.textContent = isDark ? '🌙' : '☀️';
+    };
+  </script>
+</body>
+</html>
